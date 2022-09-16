@@ -1,24 +1,35 @@
 import logo from './logo.svg';
 import './App.css';
+import { useState } from 'react';
+import { GifGrid } from './componentes/GifGrid';
 
 function App() {
+
+  const [categorias, setCategorias] = useState([]);
+  const [categoria, setCategoria] = useState('');
+
+  const onSetCaegory = ( evt ) => {
+    setCategoria( evt.target.value )
+  }
+
+  const onAddCategory = () => {
+    setCategorias( [...categorias, categoria ])
+  }
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <input type="text" value={categoria} onChange={ ( event ) => onSetCaegory( event ) } />
+      <button onClick={ () => onAddCategory() }> Agregar </button>
+
+      {
+        categorias.map( (category, key) => {
+          return (
+            <GifGrid key={key} category={category} />
+          )
+        })
+      }
+    </>
   );
 }
 
